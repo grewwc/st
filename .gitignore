@@ -1,4 +1,5 @@
 .vscode
 build
 bin
-!data/example.fits
+data
+# !*/data/example.fits

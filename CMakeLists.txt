@@ -33,6 +33,12 @@ add_executable(main main.cpp
 )
 
 
+set(CMAKE_INSTALL_PREFIX ./)
+install(TARGETS main 
+    RUNTIME DESTINATION ${CMAKE_SOURCE_DIR}/bin
+)
+
+
 target_link_libraries(main 
     -L${CMAKE_SOURCE_DIR}/lib/cfitsio/ 
     -L${CMAKE_SOURCE_DIR}/lib/alglib/

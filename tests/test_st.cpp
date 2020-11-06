@@ -17,7 +17,7 @@ void what(const FittingSpace& a){}
 
 void test_st_multi_core(){
     vector<Image> images = get_images();
-    CombinedSpace space {{90, 111, 21}, {90, 111, 21}, {1.5, 2.5, 12}, {2.5, 3.5, 12}};
+    CombinedSpace space {{90, 111, 15}, {90, 111, 15}, {1.5, 2.5, 12}, {2.5, 3.5, 12}};
     vector<future<FittingResult>> res_fu;
     vector<CombinedSpace> sub_spaces = space.split(3);
     for(auto c : sub_spaces){

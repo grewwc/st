@@ -20,5 +20,4 @@ using namespace std;
 int main()
 {
     test_st_multi_core();
-    
 }

@@ -6,6 +6,8 @@ std::vector<Image> get_images(){
     Image img = read_image_2d(fname);
     constexpr int N = 30;
 
+    // 此处假设 NEO 第一张图上的位置是：i0=100, j0=100
+    // 速度是 （2，3) pixels/s
     int i0 = 100, j0 = 100;
     double vi = 2, vj = 3;
 

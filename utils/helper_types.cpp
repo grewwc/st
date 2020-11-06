@@ -1,7 +1,7 @@
 #include "helper_types.h"
 #include "normal_io.h"
 #include "numeric_utils.h"
-
+#include "fits_io.h"
 #include <stdexcept>
 #include <cmath>
 
@@ -43,24 +43,7 @@ Image Image::add_all(const vector<Image> &images, int row_shift, int col_shift)
     return res;
 }
 
-void Image::save(const char *outname, bool full)
+void Image::save(const char *outname, const char *sample_name, bool full) const
 {
-    vector<float> vec;
-    if (full)
-    {
-        vec = flatten(this->m_data, this->real_shape());
-    }
-    else
-    {
-        auto subimg = this->get_effect_img();
-        vec.reserve(this->size());
-        for (int i = 0; i < this->rows(); i++)
-        {
-            for (int j = 0; j < this->cols(); j++)
-            {
-                vec.push_back(subimg[i][j]);
-            }
-        }
-    }
-    write_float(outname, vec);
+    write_image_2d(outname, sample_name, *this);
 }

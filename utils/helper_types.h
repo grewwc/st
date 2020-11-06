@@ -3,6 +3,7 @@
 #include <vector>
 #include <tuple>
 #include <iostream>
+#include <vector>
 #include "numeric_utils.h"
 
 // using Image = std::vector<float>;
@@ -132,6 +133,24 @@ public:
         return this->operator+=(-val);
     }
 
+    float *data(bool full = false) const
+    {
+        if (full)
+        {
+            return flatten(m_data, real_shape()).data();
+        }
+        std::vector<float> vec;
+        auto subimg = this->get_effect_img();
+        vec.reserve(this->size());
+        for (int i = 0; i < this->rows(); i++)
+        {
+            for (int j = 0; j < this->cols(); j++)
+            {
+                vec.push_back(subimg[i][j]);
+            }
+        }
+        return vec.data();
+    }
     /** 
      * effective size
      */
@@ -203,17 +222,17 @@ public:
         m_y1 = std::max(0, std::min(m_rows, m_y1 - row));
     }
 
-    PrintableShape shape()
+    PrintableShape shape() const
     {
         return {rows(), cols()};
     }
 
-    PrintableShape real_shape()
+    PrintableShape real_shape() const
     {
         return {real_rows(), real_cols()};
     }
 
-    EffectiveImage get_effect_img()
+    EffectiveImage get_effect_img() const
     {
         return EffectiveImage{m_data, m_x0, m_y0, m_x1, m_y1};
     }
@@ -228,7 +247,7 @@ public:
     }
 
     Image &add(const Image &other, int row_shift, int col_shift);
-    void save(const char *fname, bool full = false);
+    void save(const char *fname, const char *sample_name, bool full = false) const;
 
     static Image add_all(const std::vector<Image> &images, int row_shift, int col_shift);
 

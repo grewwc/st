@@ -7,7 +7,9 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 set(CMAKE_CXX_STANDARD 17)
 
-INCLUDE_DIRECTORIES(includes/cfitsio  includes/alglib utils tests)
+INCLUDE_DIRECTORIES(includes/cfitsio  includes/alglib 
+    includes/stb
+    utils tests)
 
 set(SOURCEDIR utils)
 
@@ -22,6 +24,8 @@ add_executable(main main.cpp
     ${SOURCEDIR}/fits_io.cpp
     ${SOURCEDIR}/lsfit.cpp
     ${SOURCEDIR}/api.cpp
+    
+    includes/stb/stb_image_write.h
 
     tests/test_st.cpp
     tests/mock_data.cpp

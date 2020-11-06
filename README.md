@@ -1,11 +1,10 @@
 # Synthetic Tracking Algorithm (CPU single threaded version)
 
-### Requirements
+## <span style='color:#0abab5'>Requirements</span>
 
 -   A linux machine
 -   A c++ compiler which supports c++17 standard
--   Cmake (minimum version: 3.14)
--   cfitsio
+-   Cmake (minimum version: 3.10)
 
 ---
 
@@ -51,9 +50,13 @@ Switching between multi-core and single-core is simple.
 ---
 
 ## <span style='color:#0abab5'>Installation Instructions</span>
-
-1. Make a ***_build_*** directory.
-2. Run the following command: <br/>
+1. Run the following command to get the code: <br/>
+   ```git clone https://github.com/grewwc/st.git```
+2. Go to the "***st***" directory, make a "***build***" subdirectory.
+3. Inside the "***build***" directory, run the following command: <br/>
    ``` cmake .. ; make ; make install ```
-3. The directory "***bin***" is created, the executable "***main***" is in this directory.
+4. Navigate to the root directory "***st***", the subdirectory "***bin***" is created, the executable "***main***" is in this subdirectory.
 
+---
+## <span style='color:#0abab5'>Sample</span>
+The fits file is: "***st/data/example.fits***"

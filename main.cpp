@@ -11,11 +11,7 @@
 #include "test_api.h"
 
 #include "mock_data.h"
-
 using namespace std;
-
-
-
 
 int main()
 {

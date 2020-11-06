@@ -6,6 +6,7 @@
 
 #include <mutex>
 #include <future>
+#include <iomanip>
 
 using namespace std;
 
@@ -61,7 +62,8 @@ Image add_all_images(const std::vector<Image> &images, int row_shift, int col_sh
 
 /** the main function for finding the best params */
 FittingResult fit(const std::vector<Image> &images, const FittingSpace &i0_space,
-                  const FittingSpace &j0_space, const FittingSpace &vi_space, const FittingSpace &vj_space)
+                  const FittingSpace &j0_space, const FittingSpace &vi_space, const FittingSpace &vj_space,
+                  bool verbose)
 {
     const auto i0s = static_cast<vector<double>>(i0_space);
     const auto j0s = static_cast<vector<double>>(j0_space);
@@ -72,8 +74,8 @@ FittingResult fit(const std::vector<Image> &images, const FittingSpace &i0_space
     int res_i0, res_j0;
     double res_vi, res_vj;
 
-    // const auto total_count = i0s.size() * j0s.size() * vis.size() * vjs.size();
-    // size_t count = 0l;
+    const auto total_count = i0s.size() * j0s.size() * vis.size() * vjs.size();
+    size_t count = 0l;
 
     for (auto i0 : i0s)
     {
@@ -83,8 +85,11 @@ FittingResult fit(const std::vector<Image> &images, const FittingSpace &i0_space
             {
                 for (auto vj : vjs)
                 {
-                    // cout << "Progress "
-                    //      << "( " << (double)count / total_count * 100 << "% )  " << count++ << "/" << total_count << "\n";
+                    if (verbose)
+                    {
+                        cout << setprecision(5) << "Progress "
+                             << "( " << (double)count / total_count * 100 << "% )  " << count++ << "/" << total_count << "\n";
+                    }
                     double curr_cost = Cost(images, i0, j0, vi, vj);
                     if (cost > curr_cost)
                     {
@@ -110,16 +115,16 @@ FittingResult fit_multi(const std::vector<Image> &images, const FittingSpace &x0
     CombinedSpace space{x0, y0, vi, vj};
     vector<future<FittingResult>> res_fu;
     vector<CombinedSpace> sub_spaces = space.split(cores);
-    if (verbose)
-    {
-        for (auto c : sub_spaces)
-        {
-            cout << c << endl;
-        }
-    }
+    // if (verbose)
+    // {
+    //     for (auto c : sub_spaces)
+    //     {
+    //         cout << c << endl;
+    //     }
+    // }
     for (auto sub_space : sub_spaces)
     {
-        res_fu.push_back(async(launch::async, fit, images, sub_space[0].to_int(), sub_space[1].to_int(), sub_space[2], sub_space[3]));
+        res_fu.push_back(async(launch::async, fit, images, sub_space[0].to_int(), sub_space[1].to_int(), sub_space[2], sub_space[3], verbose));
     }
 
     vector<FittingResult> res;

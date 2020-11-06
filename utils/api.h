@@ -157,7 +157,8 @@ Image add_all_images(const std::vector<Image> &images, int row_shift, int col_sh
 
 
 FittingResult fit(const std::vector<Image> &images, const FittingSpace &x0,
-                  const FittingSpace &y0, const FittingSpace &vi, const FittingSpace &vj);
+                  const FittingSpace &y0, const FittingSpace &vi, const FittingSpace &vj,
+                  bool verbose=false);
 
 
 FittingResult fit_multi(const std::vector<Image> &images, const FittingSpace &x0,
